@@ -13,6 +13,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Scopes;
 
+/** A module to configure Gson and bind the request/response handler. */
 public class GsonModule extends AbstractModule {
   @Override
   protected void configure() {

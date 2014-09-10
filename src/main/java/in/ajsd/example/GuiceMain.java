@@ -7,10 +7,11 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
 
+/** The main servlet context listener that instantiates the Guice {@link Injector}. */
 public class GuiceMain extends GuiceServletContextListener {
 
   @Override
   protected Injector getInjector() {
-    return Guice.createInjector(new ApiModule("/api/*"), new GsonModule());
+    return Guice.createInjector(new ApiModule("/api"), new GsonModule());
   }
 }

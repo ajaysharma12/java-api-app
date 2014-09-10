@@ -13,7 +13,7 @@ import com.google.gson.GsonBuilder;
 @RunWith(JUnit4.class)
 public class DurationGsonAdapterTest {
 
-  private Gson gson = new GsonBuilder()
+  private final Gson gson = new GsonBuilder()
       .registerTypeAdapter(Duration.class, new DurationGsonAdapter())
       .create();
 

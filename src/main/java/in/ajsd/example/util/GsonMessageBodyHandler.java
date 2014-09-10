@@ -20,6 +20,7 @@ import javax.ws.rs.ext.Provider;
 
 import com.google.gson.Gson;
 
+/** A handler for a request/response body JSON. */
 @Provider
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)

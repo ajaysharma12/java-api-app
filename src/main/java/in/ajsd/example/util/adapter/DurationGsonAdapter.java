@@ -9,6 +9,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
+/** A {@link TypeAdapter} to convert a {@link Duration} to/from JSON. */
 public class DurationGsonAdapter extends TypeAdapter<Duration> {
 
   @Override
