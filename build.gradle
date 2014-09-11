@@ -35,6 +35,11 @@ task createDirs << {
   sourceSets*.resources.srcDirs*.each { it.mkdirs() }
 }
 
+// IDE
+eclipse {
+  downloadSources = true
+  downloadJavadoc = true
+}
 
 // Repositories for dependencies.
 repositories {
