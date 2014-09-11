@@ -1,6 +1,9 @@
 package in.ajsd.example.api;
 
+import org.joda.time.Duration;
+
 import in.ajsd.example.data.Soup;
+import in.ajsd.example.error.InvalidRangeError;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,14 +16,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import org.joda.time.Duration;
-
 @Path("/soups")
 public class Soups {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public List<Soup> getSoups(@QueryParam("max") int limit) {
+    if (limit < 0) {
+      throw new InvalidRangeError();
+    }
     Soup soup = new Soup();
     soup.setName("Split pea");
     soup.setIngredients(Arrays.asList("water", "peas"));
