@@ -1,9 +1,14 @@
+
 apply plugin: 'java'
+
+apply plugin: 'protobuf'
 apply plugin: 'war'
+apply plugin: 'jetty'
+
+// IDE
 apply plugin: 'eclipse'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'idea'
-apply plugin: 'jetty'
 
 // The Gradle wrapper.
 task wrapper(type: Wrapper) {
@@ -36,6 +41,16 @@ task createDirs << {
 }
 
 // Repositories for dependencies.
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath 'com.andrewkroh.gradle:gradle-protobuf-plugin:0.3.0'
+  }
+}
+
 repositories {
   mavenCentral()
 }
