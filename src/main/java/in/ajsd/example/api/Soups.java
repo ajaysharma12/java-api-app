@@ -3,7 +3,7 @@ package in.ajsd.example.api;
 import org.joda.time.Duration;
 
 import in.ajsd.example.data.Soup;
-import in.ajsd.example.error.InvalidRangeError;
+import in.ajsd.example.error.InvalidRangeException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,7 +23,7 @@ public class Soups {
   @Produces(MediaType.APPLICATION_JSON)
   public List<Soup> getSoups(@QueryParam("max") int limit) {
     if (limit < 0) {
-      throw new InvalidRangeError();
+      throw new InvalidRangeException();
     }
     Soup soup = new Soup();
     soup.setName("Split pea");
