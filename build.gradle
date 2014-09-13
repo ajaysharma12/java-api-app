@@ -97,3 +97,8 @@ jettyRun {
   reload = "automatic"
   scanIntervalSeconds = 1
 }
+
+// Misc
+configurations.all {
+  exclude module: 'slf4j-log4j12'
+}
