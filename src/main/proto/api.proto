@@ -4,7 +4,17 @@ package example.api;
 
 option java_package = "in.ajsd.example.proto";
 
-message ApiError {
+message Error {
   optional int32 code = 1;
   optional string message = 2;
+}
+
+message Context {
+  optional string base_url = 1;
+}
+
+message Pulse {
+  required int64 nonce = 1;
+  required int64 timestamp_ms = 2;
+  optional string message = 3;
 }

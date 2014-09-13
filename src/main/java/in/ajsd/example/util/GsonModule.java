@@ -1,6 +1,6 @@
 package in.ajsd.example.util;
 
-import in.ajsd.example.proto.Api.ApiError;
+import in.ajsd.example.proto.Api;
 import in.ajsd.example.util.adapter.DurationGsonAdapter;
 
 import javax.inject.Singleton;
@@ -32,7 +32,9 @@ public class GsonModule extends AbstractModule {
     builder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
     builder.registerTypeAdapter(Duration.class, new DurationGsonAdapter());
 
-    registerProto(builder, ApiError.class);
+    registerProto(builder, Api.Error.class);
+    registerProto(builder, Api.Context.class);
+    registerProto(builder, Api.Pulse.class);
 
     return builder.create();
   }

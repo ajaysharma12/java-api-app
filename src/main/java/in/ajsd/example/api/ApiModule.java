@@ -17,8 +17,9 @@ public class ApiModule extends ServletModule {
   @Override
   protected void configureServlets() {
     // The API endpoints.
-    bind(Greeter.class);
-    bind(Soups.class);
+    bind(ContextApi.class);
+    bind(GreeterApi.class);
+    bind(SoupsApi.class);
 
     // Just to test that Guice injection works.
     bind(String.class).annotatedWith(Names.named("greeting")).toInstance("Hello %s!");

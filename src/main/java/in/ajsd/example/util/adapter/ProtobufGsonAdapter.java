@@ -6,8 +6,6 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import com.google.common.annotations.Beta;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
@@ -35,7 +33,7 @@ public class ProtobufGsonAdapter<T extends MessageOrBuilder>
   @Override
   public T deserialize(JsonElement json, Type type, JsonDeserializationContext context)
       throws JsonParseException {
-    throw new NotImplementedException();
+    throw new RuntimeException("Not implemented yet");
   }
 
   @Override

@@ -9,12 +9,12 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 @Path("/hello")
-public class Greeter {
+public class GreeterApi {
 
   private final String greeting;
 
   @Inject
-  public Greeter(@Named("greeting") String greeting) {
+  public GreeterApi(@Named("greeting") String greeting) {
     this.greeting = greeting;
   }
 
