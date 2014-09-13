@@ -1,9 +1,9 @@
 package in.ajsd.example.api;
 
-import org.joda.time.Duration;
-
 import in.ajsd.example.data.Soup;
 import in.ajsd.example.exception.InvalidRangeException;
+
+import org.joda.time.Duration;
 
 import java.util.Arrays;
 import java.util.List;

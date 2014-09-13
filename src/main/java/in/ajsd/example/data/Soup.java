@@ -1,8 +1,8 @@
 package in.ajsd.example.data;
 
-import java.util.List;
-
 import org.joda.time.Duration;
+
+import java.util.List;
 
 public class Soup {
   private String name;

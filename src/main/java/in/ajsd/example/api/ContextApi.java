@@ -2,14 +2,14 @@ package in.ajsd.example.api;
 
 import in.ajsd.example.proto.Api;
 
+import org.joda.time.DateTime;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-import org.joda.time.DateTime;
 
 @Path("/context")
 public class ContextApi {
