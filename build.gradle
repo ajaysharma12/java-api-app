@@ -33,6 +33,9 @@ sourceSets {
       srcDir 'src/main/webapp'
     }
   }
+  generated {
+    java.srcDirs += "$buildDir/$protobuf.outputJava"
+  }
 }
 
 task createDirs << {
@@ -61,20 +64,21 @@ dependencies {
   compile 'com.google.guava:guava:18.0'
   compile 'com.google.inject.extensions:guice-servlet:3.0'
   compile 'com.google.inject:guice:3.0'
+  compile 'com.google.protobuf:protobuf-java:2.+'
+  compile 'com.sun.jersey.contribs:jersey-guice:1.+'
+  compile 'com.sun.jersey:jersey-core:1.+'
+  compile 'com.sun.jersey:jersey-server:1.+'
+  compile 'com.sun.jersey:jersey-servlet:1.+'
+  compile 'javax.ws.rs:jsr311-api:1.1.1'
   compile 'joda-time:joda-time:2.+'
   compile 'org.apache.logging.log4j:log4j-api:2.+'
   compile 'org.apache.logging.log4j:log4j-core:2.+'
   compile 'org.apache.logging.log4j:log4j-slf4j-impl:2.+'
   compile 'org.slf4j:slf4j-api:1.+'
   compile 'redis.clients:jedis:2.+'
-  compile 'javax.ws.rs:jsr311-api:1.1.1'
-  compile 'com.sun.jersey:jersey-server:1.+'
-  compile 'com.sun.jersey:jersey-core:1.+'
-  compile 'com.sun.jersey:jersey-servlet:1.+'
-  compile 'com.sun.jersey.contribs:jersey-guice:1.+'
   providedCompile 'javax.servlet:servlet-api:3.+'
-  testCompile 'junit:junit:4.+'
   testCompile 'com.google.truth:truth:0.23'
+  testCompile 'junit:junit:4.+'
 }
 
 // Non-versioned libs.
