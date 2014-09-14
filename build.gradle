@@ -81,10 +81,9 @@ dependencies {
   testCompile 'junit:junit:4.+'
 }
 
-// Non-versioned libs.
+// API documentation
 dependencies {
-  compile fileTree(dir: 'lib', include: '*.jar')
-  runtime fileTree(dir: 'lib', include: '*.jar')
+  compile 'org.jsondoc:jsondoc-core:1.0.3'
 }
 
 // The WAR.
