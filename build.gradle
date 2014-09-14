@@ -12,7 +12,7 @@ apply plugin: 'idea'
 
 // The Gradle wrapper.
 task wrapper(type: Wrapper) {
-  gradleVersion = '2.0'
+  gradleVersion = '2.1'
 }
 
 // Compile with -Xlint
@@ -81,12 +81,6 @@ dependencies {
   testCompile 'junit:junit:4.+'
 }
 
-// API documentation
-dependencies {
-  compile 'com.wordnik:swagger-annotations:1.3.8'
-  compile 'com.wordnik:swagger-jaxrs_2.10:1.3.8'
-}
-
 // The WAR.
 war {
   baseName = "example"  // name of the WAR and context path.
@@ -96,6 +90,34 @@ war {
 jettyRun {
   reload = "automatic"
   scanIntervalSeconds = 1
+}
+
+// API documentation
+apply plugin: 'maven'
+apply plugin: 'swagger'
+
+buildscript {
+  repositories {
+    mavenLocal()
+  }
+  dependencies {
+    classpath 'com.github.gradle-swagger:gradle-swagger-plugin:1.0.2-SNAPSHOT'
+  }
+}
+dependencies {
+  compile 'com.wordnik:swagger-annotations:1.3.8'
+}
+
+swagger {
+  endPoints = [
+    'in.ajsd.example.api'
+  ]
+  apiVersion = 'v1'
+  basePath = 'http://127.0.0.1/example/api'
+  mustacheFileRoot = "${projectDir}/src/main/resources/"
+  outputTemplate = "${mustacheFileRoot}/swagger-doc.html.mustache"
+  swaggerDirectory = "${buildDir}/site/api-docs"
+  outputPath = "${buildDir}/site/swagger/swagger-doc.html"
 }
 
 // Misc
