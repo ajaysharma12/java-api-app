@@ -1,6 +1,6 @@
 package in.ajsd.example.util;
 
-import in.ajsd.example.proto.Api;
+import in.ajsd.example.proto.ApiEntities;
 import in.ajsd.example.util.adapter.DurationGsonAdapter;
 import in.ajsd.example.util.adapter.ProtobufGsonAdapter;
 
@@ -32,9 +32,10 @@ public class GsonModule extends AbstractModule {
     builder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
     builder.registerTypeAdapter(Duration.class, new DurationGsonAdapter());
 
-    registerProto(builder, Api.Error.class);
-    registerProto(builder, Api.Context.class);
-    registerProto(builder, Api.Pulse.class);
+    // TODO(arunjit): Use multibinder.
+    registerProto(builder, ApiEntities.Error.class);
+    registerProto(builder, ApiEntities.Context.class);
+    registerProto(builder, ApiEntities.Pulse.class);
 
     return builder.create();
   }
