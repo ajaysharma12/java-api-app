@@ -1,9 +1,6 @@
 package in.ajsd.example.api;
 
 import in.ajsd.example.data.Soup;
-<<<<<<< HEAD:src/main/java/in/ajsd/example/api/Soups.java
-import in.ajsd.example.error.InvalidRangeException;
-=======
 import in.ajsd.example.exception.InvalidRangeException;
 
 import com.wordnik.swagger.annotations.Api;
@@ -11,7 +8,6 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 
 import org.joda.time.Duration;
->>>>>>> 958d87089fc7063ac39615d673fec60bbcb31c06:src/main/java/in/ajsd/example/api/SoupsApi.java
 
 import java.util.Arrays;
 import java.util.List;

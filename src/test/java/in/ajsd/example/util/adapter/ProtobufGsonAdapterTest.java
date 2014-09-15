@@ -2,7 +2,7 @@ package in.ajsd.example.util.adapter;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import in.ajsd.example.proto.Api.Pulse;
+import in.ajsd.example.proto.ApiEntities.Pulse;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
