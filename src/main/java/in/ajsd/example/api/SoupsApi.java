@@ -1,9 +1,17 @@
 package in.ajsd.example.api;
 
-import org.joda.time.Duration;
-
 import in.ajsd.example.data.Soup;
+<<<<<<< HEAD:src/main/java/in/ajsd/example/api/Soups.java
 import in.ajsd.example.error.InvalidRangeException;
+=======
+import in.ajsd.example.exception.InvalidRangeException;
+
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
+
+import org.joda.time.Duration;
+>>>>>>> 958d87089fc7063ac39615d673fec60bbcb31c06:src/main/java/in/ajsd/example/api/SoupsApi.java
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,10 +25,12 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 @Path("/soups")
-public class Soups {
+@Api("/soups")
+public class SoupsApi {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
+  @ApiOperation("Get soups")
   public List<Soup> getSoups(@QueryParam("max") int limit) {
     if (limit < 0) {
       throw new InvalidRangeException();
@@ -35,7 +45,8 @@ public class Soups {
   @POST
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public Soup newSoup(Soup soup) {
+  @ApiOperation("Add new soup")
+  public Soup newSoup(@ApiParam(required = true) Soup soup) {
     soup.setName("(new) " + soup.getName());
     return soup;
   }

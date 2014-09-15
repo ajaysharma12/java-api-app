@@ -3,6 +3,9 @@ package in.ajsd.example.filter;
 import com.google.common.base.Strings;
 import com.google.common.collect.Sets;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -19,6 +22,8 @@ import javax.servlet.http.HttpServletResponse;
 
 @Singleton
 public class CorsFilter implements Filter {
+
+  private static final Logger log = LoggerFactory.getLogger(CorsFilter.class);
 
   private static final Set<Pattern> allowedOrigins = Sets.newHashSet(
       Pattern.compile("^http://127.0.0.1(:\\d{2,4})?.*$"),
@@ -41,6 +46,7 @@ public class CorsFilter implements Filter {
     for (Pattern regex : allowedOrigins) {
       if (regex.matcher(origin).matches()) {
         httpResponse.setHeader("Access-Control-Allow-Origin", origin);
+        log.info("Origin was allowed: {}.", origin);
         break;
       }
     }

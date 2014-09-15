@@ -1,5 +1,7 @@
 package in.ajsd.example.util;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -17,8 +19,6 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
-
-import com.google.gson.Gson;
 
 /** A handler for a request/response body JSON. */
 @Provider
