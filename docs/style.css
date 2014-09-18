@@ -1,0 +1,48 @@
+html, body {
+  width: 100%; height: 100%;
+  font: 16px/1.2 arial;
+}
+
+html, body, h1, h2, h3, h4, h5, h6, ul, li {
+  margin: 0;
+  padding: 0;
+}
+
+ul, li {
+  list-style: none;
+}
+
+#apis {
+  padding: 10px;
+}
+
+.api {
+  padding: 10px;
+}
+
+.operation {
+  border: 1px solid;
+  margin: 5px 0;
+}
+.operation h3 {
+  padding: 3px 0;
+}
+.operation h3 .method,
+.operation h3 .summary {
+  padding: 4px 8px;
+}
+
+.operation.GET {
+  border-color: green;
+}
+.operation.GET h3 {
+  background-color: #9ce5a0;
+}
+.operation.GET h3 .method {
+  color: white;
+  background-color: green;
+}
+
+.operation.POST {
+  border-color: orange;
+}

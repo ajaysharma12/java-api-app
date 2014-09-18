@@ -11,22 +11,23 @@ FLAGS = gflags.FLAGS
 
 gflags.DEFINE_string('api_docs_path', '', 'The directory with all the '
     'api-docs, including service.json')
-gflags.DEFINE_string('md_out', '', 'The output file for Markdown docs')
-gflags.DEFINE_string('html_out', '', 'The output file for HTML docs')
+gflags.DEFINE_string('html_out', '', 'The output file')
 
 _template_loader = jinja2.FileSystemLoader(os.path.dirname(__file__))
 _env = jinja2.Environment(loader=_template_loader)
 
-def main(args):
+
+def GetService(api_docs_path=None):
+  api_docs_path = api_docs_path or FLAGS.api_docs_path
   service = None
-  with open(os.path.join(FLAGS.api_docs_path, 'service.json')) as f:
+  with open(os.path.join(api_docs_path, 'service.json')) as f:
     service = json.loads(f.read())
 
   apis = []
   models = []
   for api in service['apis']:
     p = api['path'].replace('{format}', 'json')[1:]
-    with open(os.path.join(FLAGS.api_docs_path, p)) as f:
+    with open(os.path.join(api_docs_path, p)) as f:
       api = json.loads(f.read())
       if 'models' in api:
         models.append(api.pop('models'))
@@ -35,18 +36,24 @@ def main(args):
   service.pop('apis')
   service['apiDocuments'] = apis
   service['models'] = models
+  return service
 
-  tpl = _env.get_template('template.md')
-  docs = tpl.render(**service)
 
-  out = FLAGS.md_out or os.path.join(os.path.dirname(__file__), 'docs.md')
+def RenderHtml(service):
+  tpl = _env.get_template('template.html')
+  return tpl.render(**service)
+
+
+def main(args):
+  service = GetService(FLAGS.api_docs_path)
+
+  # print(json.dumps(service))
+
+  docs = RenderHtml(service)
+
+  out = FLAGS.html_out or os.path.join(os.path.dirname(__file__), 'docs.html')
   with open(out, 'w') as f:
     f.write(docs)
-
-  out = FLAGS.html_out
-  if out:
-    with open(out, 'w') as f:
-      f.write('Not implemented yet')
 
 
 if __name__ == '__main__':

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Docs</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  {%- if apiInfo -%}
+  <header>
+    <h1>{{apiInfo.title}}</h1>
+    <p>{{apiInfo.description}}</p>
+    <p><a href="{{apiInfo.termsOfServiceUrl}}">Terms of Service</a></p>
+    <p>Contact: <a href="mailto:{{apiInfo.contact}}">{{apiInfo.contact}}</a></p>
+    <p>License: <a href="{{apiInfo.licenseUrl}}">{{apiInfo.license}}</a></p>
+  </header>
+  {%- endif -%}
+  <section id="api">
+    <h3 class="basepath">{{apiDocuments.0.basePath}}</h3>
+    <h3 class="version">{{apiDocuments.0.apiVersion}}</h3>
+  </section>
+  <ul id="apis">
+  {% for apiDoc in apiDocuments -%}
+  {% for api in apiDoc.apis -%}
+    <li class="api">
+      <h3 class="path">{{api.path}}</h3>
+      <ul class="operations">
+        {% for op in api.operations -%}
+        <li class="operation {{op.method}}">
+          <h3>
+            <span class="method">{{op.method}}</span>
+            <span class="summary">{{op.summary}}</span>
+          </h3>
+        </li>
+        {%- endfor %}
+      </ul>
+    </li>
+  {%- endfor %}
+  {%- endfor %}
+  </ul>
+</body>
+</html>
