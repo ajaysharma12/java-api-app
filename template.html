@@ -28,8 +28,8 @@
         {% for op in api.operations -%}
         <li class="operation {{op.method}}">
           <header>
-            <h3 class="method">{{op.method}}</h3>
-            <h3 class="summary">{{op.summary}}</h3>
+            <h4 class="method">{{op.method}}</h4>
+            <h4 class="summary">{{op.summary}}</h4>
           </header>
           {% if op.queryParameters -%}
           <section class="parameters">
@@ -64,6 +64,19 @@
             </div>
           </section>
           {%- endif %}
+          <section class="response">
+            <h4>Response:</h4>
+            <div class="type">
+              {% if op.type == 'array' -%}
+              <span class="array">array</span>
+              <a href="#model_{{op|itemsref}}">{{op|itemsref}}</a>
+              {%- elif op.type in ['string', 'number'] -%}
+              <span>{{op.type}}</span>
+              {%- elif op.type != 'void' -%}
+              <a href="#model_{{op.type}}">{{op.type}}</a>
+              {%- endif %}
+            </div>
+          </section>
         </li>
         {%- endfor %}
       </ul>

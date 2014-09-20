@@ -11,6 +11,92 @@
   </section>
   <ul id="apis">
   <li class="api">
+      <h2 class="path">/soups</h2>
+      <ul class="operations">
+        <li class="operation POST">
+          <header>
+            <h3 class="method">POST</h3>
+            <h3 class="summary">Add new soup</h3>
+          </header>
+          
+          
+          <section class="request">
+            <h4>Request:</h4>
+            <div class="param">
+              <div class="required">required</div>
+              <div class="type"><a href="#model_Soup">Soup</a></div>
+              <div class="desc"></div>
+            </div>
+          </section>
+          <section class="response">
+            <h4>Response:</h4>
+            <a href="#model_Soup">Soup</a>
+          </section>
+        </li><li class="operation GET">
+          <header>
+            <h3 class="method">GET</h3>
+            <h3 class="summary">Get soups</h3>
+          </header>
+          <section class="parameters">
+            <h4>Query parameters:</h4>
+            <ul>
+            <li class="param">
+                <div class="optional">optional</div>
+                <div class="name">max</div>
+                <div class="type">integer</div>
+                <div class="desc"></div>
+              </li>
+            </ul>
+          </section>
+          
+          <section class="response">
+            <h4>Response:</h4>
+            <span class="array">List of</span>
+            <a href="#model_"></a>
+          </section>
+        </li>
+      </ul>
+    </li><li class="api">
+      <h2 class="path">/context</h2>
+      <ul class="operations">
+        <li class="operation GET">
+          <header>
+            <h3 class="method">GET</h3>
+            <h3 class="summary">Get context</h3>
+          </header>
+          
+          
+          <section class="response">
+            <h4>Response:</h4>
+            <a href="#model_Context">Context</a>
+          </section>
+        </li>
+      </ul>
+    </li><li class="api">
+      <h2 class="path">/context/pulse</h2>
+      <ul class="operations">
+        <li class="operation POST">
+          <header>
+            <h3 class="method">POST</h3>
+            <h3 class="summary">Check whether the application is alive</h3>
+          </header>
+          
+          
+          <section class="request">
+            <h4>Request:</h4>
+            <div class="param">
+              <div class="optional">optional</div>
+              <div class="type"><a href="#model_Pulse">Pulse</a></div>
+              <div class="desc"></div>
+            </div>
+          </section>
+          <section class="response">
+            <h4>Response:</h4>
+            <a href="#model_Pulse">Pulse</a>
+          </section>
+        </li>
+      </ul>
+    </li><li class="api">
       <h2 class="path">/hello</h2>
       <ul class="operations">
         <li class="operation GET">
@@ -29,55 +115,11 @@
               </li>
             </ul>
           </section>
-        </li>
-      </ul>
-    </li><li class="api">
-      <h2 class="path">/context</h2>
-      <ul class="operations">
-        <li class="operation GET">
-          <header>
-            <h3 class="method">GET</h3>
-            <h3 class="summary">Get context</h3>
-          </header>
           
-        </li>
-      </ul>
-    </li><li class="api">
-      <h2 class="path">/context/pulse</h2>
-      <ul class="operations">
-        <li class="operation POST">
-          <header>
-            <h3 class="method">POST</h3>
-            <h3 class="summary">Check whether the application is alive</h3>
-          </header>
-          
-        </li>
-      </ul>
-    </li><li class="api">
-      <h2 class="path">/soups</h2>
-      <ul class="operations">
-        <li class="operation GET">
-          <header>
-            <h3 class="method">GET</h3>
-            <h3 class="summary">Get soups</h3>
-          </header>
-          <section class="parameters">
-            <h4>Query parameters:</h4>
-            <ul>
-            <li class="param">
-                <div class="optional">optional</div>
-                <div class="name">max</div>
-                <div class="type">integer</div>
-                <div class="desc"></div>
-              </li>
-            </ul>
+          <section class="response">
+            <h4>Response:</h4>
+            <a href="#model_string">string</a>
           </section>
-        </li><li class="operation POST">
-          <header>
-            <h3 class="method">POST</h3>
-            <h3 class="summary">Add new soup</h3>
-          </header>
-          
         </li>
       </ul>
     </li>
