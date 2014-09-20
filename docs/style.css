@@ -1,19 +1,54 @@
+body {
+  opacity: 1;
+  transition-property: opacity;
+  transition-duration: 0.5s;
+}
+body[unresolved] {
+  opacity: 0;
+}
+
 html, body {
   width: 100%; height: 100%;
-  font: 16px/1.2 arial;
 }
 
 html, body, h1, h2, h3, h4, h5, h6, ul, li {
   margin: 0;
   padding: 0;
+  font: inherit;
 }
 
 ul, li {
   list-style: none;
 }
 
+body {
+  font: 16px/1.2 "Source Sans Pro", arial;
+}
+
+h2, h3 {
+  font-weight: bold;
+}
+h2 {
+  font-size: 1.4em;
+}
+h3 {
+  font-size: 1.2em;
+}
+
+#api,
 #apis {
   padding: 10px;
+}
+
+#api h3 {
+  padding: 4px 8px;
+}
+
+#api .basepath {
+  color: #333;
+}
+#api .version {
+  color: #999;
 }
 
 .api {
@@ -23,26 +58,80 @@ ul, li {
 .operation {
   border: 1px solid;
   margin: 5px 0;
+  border-top-left-radius: 5px;
+  overflow: hidden;
 }
-.operation h3 {
-  padding: 3px 0;
+.operation header .method {
+  width: 60px;
+  text-align: center;
 }
-.operation h3 .method,
-.operation h3 .summary {
+.operation header .method,
+.operation header .summary {
+  display: inline-block;
+  vertical-align: middle;
   padding: 4px 8px;
 }
 
 .operation.GET {
   border-color: green;
 }
-.operation.GET h3 {
+.operation.GET header {
   background-color: #9ce5a0;
 }
-.operation.GET h3 .method {
+.operation.GET header .method {
   color: white;
   background-color: green;
 }
 
 .operation.POST {
   border-color: orange;
+}
+.operation.POST header {
+  background-color: #ffd790;
+}
+.operation.POST header .method {
+  color: white;
+  background-color: orange;
+}
+
+.parameters {
+  padding: 10px;
+}
+.parameters .param {
+  background-color: #f1f1f1;
+  margin-top: 5px;
+}
+.parameters .param .name,
+.parameters .param .type,
+.parameters .param .required,
+.parameters .param .optional {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 24px;
+  padding: 4px 8px;
+}
+
+.parameters .param .name {
+  width: 90px;
+  font-weight: bold;
+}
+.parameters .param .type {
+  width: 50px;
+}
+.parameters .param .required,
+.parameters .param .optional {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.8em;
+  width: 60px;
+  color: white;
+}
+.parameters .param .required {
+  background-color: #d51;
+}
+.parameters .param .optional {
+  background-color: #c1c1c1;
+}
+.parameters .param .desc {
+  color: #555;
 }

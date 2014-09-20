@@ -113,7 +113,7 @@ swagger {
     'in.ajsd.example.api'
   ]
   apiVersion = 'v1'
-  basePath = 'http://127.0.0.1/example/api'
+  basePath = 'http://127.0.0.1:8080/example/api'
   mustacheFileRoot = "${projectDir}/src/main/resources/"
   outputTemplate = "${mustacheFileRoot}/swagger-doc.html.mustache"
   swaggerDirectory = "${buildDir}/site/api-docs"
