@@ -17,6 +17,15 @@ _template_loader = jinja2.FileSystemLoader(os.path.dirname(__file__))
 _env = jinja2.Environment(loader=_template_loader)
 
 
+def ItemsRef(value):
+  if 'items' in value and '$ref' in value['items']:
+    return value['items']['$ref']
+  return ''
+
+
+_env.filters['itemsref'] = ItemsRef
+
+
 def FixOperation(op):
   query_params = []
   body_params = []

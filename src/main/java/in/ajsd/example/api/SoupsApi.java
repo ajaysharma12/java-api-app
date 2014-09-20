@@ -26,7 +26,7 @@ public class SoupsApi {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation("Get soups")
+  @ApiOperation(value = "Get soups", response = Soup.class, responseContainer = "List")
   public List<Soup> getSoups(@QueryParam("max") int limit) {
     if (limit < 0) {
       throw new InvalidRangeException();
@@ -41,7 +41,7 @@ public class SoupsApi {
   @POST
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  @ApiOperation("Add new soup")
+  @ApiOperation(value = "Add new soup", response = Soup.class)
   public Soup newSoup(@ApiParam(required = true) Soup soup) {
     soup.setName("(new) " + soup.getName());
     return soup;

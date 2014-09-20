@@ -21,18 +21,32 @@ ul, li {
   list-style: none;
 }
 
+a {
+  text-decoration: none;
+}
+a:hover, a:active {
+  text-decoration: underline;
+}
+
 body {
   font: 16px/1.2 "Source Sans Pro", arial;
+  color: #333;
+  background-color: #f8f8f8;
 }
 
 h2, h3 {
   font-weight: bold;
+  line-height: 2;
 }
 h2 {
   font-size: 1.4em;
 }
 h3 {
   font-size: 1.2em;
+}
+h4 {
+  font-size: 1em;
+  line-height: 2;
 }
 
 #api,
@@ -53,11 +67,18 @@ h3 {
 
 .api {
   padding: 10px;
+  margin-bottom: 1em;
+  background-color: #fff;
+  box-shadow: 0 1px 10px #999;
+}
+
+.operations {
+  margin-left: 10px;
 }
 
 .operation {
   border: 1px solid;
-  margin: 5px 0;
+  margin: 10px 0;
   border-top-left-radius: 5px;
   overflow: hidden;
 }
@@ -70,6 +91,7 @@ h3 {
   display: inline-block;
   vertical-align: middle;
   padding: 4px 8px;
+  font-weight: bold;
 }
 
 .operation.GET {
@@ -133,9 +155,33 @@ h3 {
   color: #555;
 }
 
-.parameters {
+.parameters,
+.request,
+.response {
   padding: 10px;
 }
-.request {
-  padding: 10px;
+
+.request .type {
+  font-weight: bold;
+}
+
+.response .type {
+  background-color: #f1f1f1;
+  font-weight: bold;
+  line-height: 24px;
+}
+.response .type > span,
+.response .type > a {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 4px 8px;
+}
+.response .type .array {
+  background-color: #7cb;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.8em;
+  width: 60px;
+  color: white;
+  text-align: center;
 }

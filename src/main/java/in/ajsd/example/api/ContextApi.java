@@ -21,7 +21,7 @@ public class ContextApi {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation("Get context")
+  @ApiOperation(value = "Get context", response = Context.class)
   public Context getContext() {
     return Context.newBuilder()
         .setBaseUrl("/")
@@ -32,7 +32,7 @@ public class ContextApi {
   @Path("/pulse")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  @ApiOperation("Check whether the application is alive")
+  @ApiOperation(value = "Check whether the application is alive", response = Pulse.class)
   public Pulse checkPulse(Pulse pulse) {
     return pulse.toBuilder()
         .setNonce(pulse.getNonce() + 1)

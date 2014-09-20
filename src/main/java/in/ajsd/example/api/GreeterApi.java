@@ -25,7 +25,7 @@ public class GreeterApi {
 
   @GET
   @Produces(MediaType.TEXT_PLAIN)
-  @ApiOperation("Says hello")
+  @ApiOperation(value = "Says hello", response = String.class)
   public String sayHello(@ApiParam(required = true) @QueryParam("name") String name) {
     return String.format(greeting, name);
   }
