@@ -18,24 +18,17 @@
             <h3 class="method">GET</h3>
             <h3 class="summary">Says hello</h3>
           </header>
-          
-        </li>
-      </ul>
-    </li><li class="api">
-      <h2 class="path">/soups</h2>
-      <ul class="operations">
-        <li class="operation POST">
-          <header>
-            <h3 class="method">POST</h3>
-            <h3 class="summary">Add new soup</h3>
-          </header>
-          
-        </li><li class="operation GET">
-          <header>
-            <h3 class="method">GET</h3>
-            <h3 class="summary">Get soups</h3>
-          </header>
-          
+          <section class="parameters">
+            <h4>Query parameters:</h4>
+            <ul>
+            <li class="param">
+                <div class="required">required</div>
+                <div class="name">name</div>
+                <div class="type">string</div>
+                <div class="desc"></div>
+              </li>
+            </ul>
+          </section>
         </li>
       </ul>
     </li><li class="api">
@@ -56,6 +49,33 @@
           <header>
             <h3 class="method">POST</h3>
             <h3 class="summary">Check whether the application is alive</h3>
+          </header>
+          
+        </li>
+      </ul>
+    </li><li class="api">
+      <h2 class="path">/soups</h2>
+      <ul class="operations">
+        <li class="operation GET">
+          <header>
+            <h3 class="method">GET</h3>
+            <h3 class="summary">Get soups</h3>
+          </header>
+          <section class="parameters">
+            <h4>Query parameters:</h4>
+            <ul>
+            <li class="param">
+                <div class="optional">optional</div>
+                <div class="name">max</div>
+                <div class="type">integer</div>
+                <div class="desc"></div>
+              </li>
+            </ul>
+          </section>
+        </li><li class="operation POST">
+          <header>
+            <h3 class="method">POST</h3>
+            <h3 class="summary">Add new soup</h3>
           </header>
           
         </li>

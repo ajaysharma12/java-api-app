@@ -94,44 +94,48 @@ h3 {
   background-color: orange;
 }
 
-.parameters {
-  padding: 10px;
-}
-.parameters .param {
+.operation .param {
   background-color: #f1f1f1;
   margin-top: 5px;
 }
-.parameters .param .name,
-.parameters .param .type,
-.parameters .param .required,
-.parameters .param .optional {
+.operation .param .name,
+.operation .param .type,
+.operation .param .required,
+.operation .param .optional {
   display: inline-block;
   vertical-align: middle;
   line-height: 24px;
   padding: 4px 8px;
 }
 
-.parameters .param .name {
+.operation .param .name {
   width: 90px;
   font-weight: bold;
 }
-.parameters .param .type {
+.operation .param .type {
   width: 50px;
 }
-.parameters .param .required,
-.parameters .param .optional {
+.operation .param .required,
+.operation .param .optional {
   text-transform: uppercase;
   font-weight: bold;
   font-size: 0.8em;
   width: 60px;
   color: white;
 }
-.parameters .param .required {
+.operation .param .required {
   background-color: #d51;
 }
-.parameters .param .optional {
+.operation .param .optional {
   background-color: #c1c1c1;
 }
-.parameters .param .desc {
+.operation .param .desc {
   color: #555;
+}
+
+.parameters {
+  padding: 10px;
+}
+.request {
+  padding: 10px;
 }
