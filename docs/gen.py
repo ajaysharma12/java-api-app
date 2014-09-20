@@ -84,7 +84,9 @@ def GetService(api_docs_path=None):
 
 def RenderHtml(service):
   tpl = _env.get_template('template.html')
-  return tpl.render(**service)
+  html = tpl.render(**service)
+  html = ' '.join(html.split())
+  return html
 
 
 def main(args):
