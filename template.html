@@ -2,9 +2,10 @@
 <html>
 <head>
   <title>Docs</title>
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-<body>
+<body unresolved>
   {%- if apiInfo -%}
   <header>
     <h1>{{apiInfo.title}}</h1>
@@ -22,14 +23,33 @@
   {% for apiDoc in apiDocuments -%}
   {% for api in apiDoc.apis -%}
     <li class="api">
-      <h3 class="path">{{api.path}}</h3>
+      <h2 class="path">{{api.path}}</h2>
       <ul class="operations">
         {% for op in api.operations -%}
         <li class="operation {{op.method}}">
-          <h3>
-            <span class="method">{{op.method}}</span>
-            <span class="summary">{{op.summary}}</span>
-          </h3>
+          <header>
+            <h3 class="method">{{op.method}}</h3>
+            <h3 class="summary">{{op.summary}}</h3>
+          </header>
+          {% if op.queryParameters -%}
+          <section class="parameters">
+            <h4>Query parameters:</h4>
+            <ul>
+            {% for param in op.queryParameters -%}
+              <li class="param">
+                {% if param.required -%}
+                <div class="required">required</div>
+                {%- else -%}
+                <div class="optional">optional</div>
+                {%- endif %}
+                <div class="name">{{param.name}}</div>
+                <div class="type">{{param.type}}</div>
+                <div class="desc">{{param.description}}</div>
+              </li>
+              {%- endfor %}
+            </ul>
+          </section>
+          {%- endif %}
         </li>
         {%- endfor %}
       </ul>
@@ -37,5 +57,8 @@
   {%- endfor %}
   {%- endfor %}
   </ul>
+  <script>
+setTimeout(function(){document.body.removeAttribute('unresolved')},100);
+  </script>
 </body>
 </html>

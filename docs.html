@@ -2,59 +2,68 @@
 <html>
 <head>
   <title>Docs</title>
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-<body><section id="api">
-    <h3 class="basepath">http://127.0.0.1/example/api</h3>
+<body unresolved><section id="api">
+    <h3 class="basepath">http://127.0.0.1:8080/example/api</h3>
     <h3 class="version">v1</h3>
   </section>
   <ul id="apis">
   <li class="api">
-      <h3 class="path">/soups</h3>
+      <h2 class="path">/hello</h2>
       <ul class="operations">
         <li class="operation GET">
-          <h3>
-            <span class="method">GET</span>
-            <span class="summary">Get soups</span>
-          </h3>
-        </li><li class="operation POST">
-          <h3>
-            <span class="method">POST</span>
-            <span class="summary">Add new soup</span>
-          </h3>
+          <header>
+            <h3 class="method">GET</h3>
+            <h3 class="summary">Says hello</h3>
+          </header>
+          
         </li>
       </ul>
     </li><li class="api">
-      <h3 class="path">/hello</h3>
-      <ul class="operations">
-        <li class="operation GET">
-          <h3>
-            <span class="method">GET</span>
-            <span class="summary">Says hello</span>
-          </h3>
-        </li>
-      </ul>
-    </li><li class="api">
-      <h3 class="path">/context/pulse</h3>
+      <h2 class="path">/soups</h2>
       <ul class="operations">
         <li class="operation POST">
-          <h3>
-            <span class="method">POST</span>
-            <span class="summary">Check whether the application is alive</span>
-          </h3>
+          <header>
+            <h3 class="method">POST</h3>
+            <h3 class="summary">Add new soup</h3>
+          </header>
+          
+        </li><li class="operation GET">
+          <header>
+            <h3 class="method">GET</h3>
+            <h3 class="summary">Get soups</h3>
+          </header>
+          
         </li>
       </ul>
     </li><li class="api">
-      <h3 class="path">/context</h3>
+      <h2 class="path">/context</h2>
       <ul class="operations">
         <li class="operation GET">
-          <h3>
-            <span class="method">GET</span>
-            <span class="summary">Get context</span>
-          </h3>
+          <header>
+            <h3 class="method">GET</h3>
+            <h3 class="summary">Get context</h3>
+          </header>
+          
+        </li>
+      </ul>
+    </li><li class="api">
+      <h2 class="path">/context/pulse</h2>
+      <ul class="operations">
+        <li class="operation POST">
+          <header>
+            <h3 class="method">POST</h3>
+            <h3 class="summary">Check whether the application is alive</h3>
+          </header>
+          
         </li>
       </ul>
     </li>
   </ul>
+  <script>
+setTimeout(function(){document.body.removeAttribute('unresolved')},100);
+  </script>
 </body>
 </html>
