@@ -2,6 +2,7 @@ package in.ajsd.example.api;
 
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -25,7 +26,7 @@ public class GreeterApi {
   @GET
   @Produces(MediaType.TEXT_PLAIN)
   @ApiOperation("Says hello")
-  public String sayHello(@QueryParam("name") String name) {
+  public String sayHello(@ApiParam(required = true) @QueryParam("name") String name) {
     return String.format(greeting, name);
   }
 }

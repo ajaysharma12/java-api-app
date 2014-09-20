@@ -50,6 +50,20 @@
             </ul>
           </section>
           {%- endif %}
+          {% if op.requestBody %}
+          <section class="request">
+            <h4>Request:</h4>
+            <div class="param">
+              {% if op.requestBody.required -%}
+              <div class="required">required</div>
+              {%- else -%}
+              <div class="optional">optional</div>
+              {%- endif %}
+              <div class="type"><a href="#model_{{op.requestBody.type}}">{{op.requestBody.type}}</a></div>
+              <div class="desc">{{op.requestBody.description}}</div>
+            </div>
+          </section>
+          {%- endif %}
         </li>
         {%- endfor %}
       </ul>

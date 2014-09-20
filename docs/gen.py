@@ -45,6 +45,7 @@ def FixApi(api):
 
 
 def FixApiDoc(api_doc):
+  api_doc['apis'] = sorted(api_doc['apis'], key=lambda x: x['path'])
   for api in api_doc['apis']:
     FixApi(api)
   return api_doc
