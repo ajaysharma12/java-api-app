@@ -84,6 +84,30 @@
   {%- endfor %}
   {%- endfor %}
   </ul>
+  <section id="models">
+  <h3>Models</h3>
+    <ul>
+      {% for model in models -%}
+      {%- for type, desc in model.iteritems() -%}
+      <li id="model_{{type}}" class="model">
+        <h3>{{type}}</h3>
+        <ul class="properties">
+          {% for field, props in desc.properties.iteritems() %}
+          <li class="prop">
+            {% if '$ref' in props -%}
+            <a class="type" href="#model_{{props|ref}}">{{props|ref}}</a>
+            {%- else -%}
+            <span class="type">{{props.type}}</span>
+            {%- endif %}
+            <span class="name">{{field|to_underscores}}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </li>
+      {%- endfor -%}
+      {%- endfor %}
+    </ul>
+  </section>
   <script>
 setTimeout(function(){document.body.removeAttribute('unresolved')},100);
   </script>
