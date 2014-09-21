@@ -1,7 +1,6 @@
 package in.ajsd.example.data;
 
 import com.wordnik.swagger.annotations.ApiModel;
-import com.wordnik.swagger.annotations.ApiModelProperty;
 
 import org.joda.time.Duration;
 
@@ -11,7 +10,6 @@ import java.util.List;
 public class Soup {
   private String name;
   private List<String> ingredients;
-  @ApiModelProperty(dataType = "java.lang.Long")
   private Duration preparationTime;
 
   public void setName(String name) {

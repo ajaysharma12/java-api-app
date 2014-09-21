@@ -21,8 +21,9 @@ ul, li {
   list-style: none;
 }
 
-a {
+a, a:visited {
   text-decoration: none;
+  color: #6478ff;
 }
 a:hover, a:active {
   text-decoration: underline;
@@ -50,11 +51,12 @@ h4 {
 }
 
 #api,
-#apis {
+#apis,
+#models {
   padding: 10px;
 }
 
-#api h3 {
+#api h3, #models h3 {
   padding: 4px 8px;
 }
 
@@ -65,7 +67,7 @@ h4 {
   color: #999;
 }
 
-.api {
+.api, .model {
   padding: 10px;
   margin: 2em;
   background-color: #fff;
@@ -116,14 +118,17 @@ h4 {
   background-color: #ffd790;
 }
 
-.operation .param {
+.operation .param,
+.model .prop {
   background-color: #f1f1f1;
   margin-top: 5px;
 }
 .operation .param .name,
 .operation .param .type,
 .operation .param .required,
-.operation .param .optional {
+.operation .param .optional,
+.model .prop .type,
+.model .prop .name {
   display: inline-block;
   vertical-align: middle;
   line-height: 24px;
@@ -184,4 +189,16 @@ h4 {
   width: 60px;
   color: #fff;
   text-align: center;
+}
+
+.model .prop .type {
+  width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-all;
+  margin-right: 10px;
+}
+
+.model .prop .name {
+  font-weight: bold;
 }

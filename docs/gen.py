@@ -2,6 +2,7 @@
 
 import json
 import os
+import re
 import sys
 
 import gflags
@@ -18,12 +19,24 @@ _env = jinja2.Environment(loader=_template_loader)
 
 
 def ItemsRef(value):
-  if 'items' in value and '$ref' in value['items']:
-    return value['items']['$ref']
+  if 'items' in value:
+    return Ref(value['items'])
   return ''
 
 
+def Ref(value):
+  if '$ref' in value:
+    return value['$ref']
+  return ''
+
+
+def ToUnderscores(value):
+  return re.sub(r'([A-Z])', r'_\1', value).lower()
+
+
 _env.filters['itemsref'] = ItemsRef
+_env.filters['ref'] = Ref
+_env.filters['to_underscores'] = ToUnderscores
 
 
 def FixOperation(op):
