@@ -16,12 +16,11 @@
   </header>
   {%- endif -%}
   <section id="api">
-    <h3 class="basepath">{{apiDocuments.0.basePath}}</h3>
-    <h3 class="version">{{apiDocuments.0.apiVersion}}</h3>
+    <h3 class="basepath">{{basePath}}</h3>
+    <h3 class="version">{{apiVersion}}</h3>
   </section>
   <ul id="apis">
-  {% for apiDoc in apiDocuments -%}
-  {% for api in apiDoc.apis -%}
+  {% for api in apis -%}
     <li class="api">
       <h2 class="path">{{api.path}}</h2>
       <ul class="operations">
@@ -82,13 +81,11 @@
       </ul>
     </li>
   {%- endfor %}
-  {%- endfor %}
   </ul>
   <section id="models">
   <h3>Models</h3>
     <ul>
-      {% for model in models -%}
-      {%- for type, desc in model.iteritems() -%}
+      {% for type, desc in models.iteritems() -%}
       <li id="model_{{type}}" class="model">
         <h3>{{type}}</h3>
         <ul class="properties">
@@ -104,7 +101,6 @@
           {% endfor %}
         </ul>
       </li>
-      {%- endfor -%}
       {%- endfor %}
     </ul>
   </section>

@@ -13,6 +13,7 @@ FLAGS = gflags.FLAGS
 gflags.DEFINE_string('api_docs_path', '', 'The directory with all the '
     'api-docs, including service.json')
 gflags.DEFINE_string('html_out', '', 'The output file')
+gflags.DEFINE_boolean('show', False, 'Show the generated service')
 
 _template_loader = jinja2.FileSystemLoader(os.path.dirname(__file__))
 _env = jinja2.Environment(loader=_template_loader)
@@ -73,6 +74,22 @@ def FixApiDoc(api_doc):
   return api_doc
 
 
+def FixModels(models):
+  ret = {}
+  for model in models:
+    for t, d in model.iteritems():
+      ret[t] = d
+  return ret
+
+
+def FlattenApiDocs(api_docs):
+  apis = []
+  for api_doc in api_docs:
+    for api in api_doc['apis']:
+      apis.append(api)
+  return (api_docs[0]['basePath'], api_docs[0]['apiVersion'], apis)
+
+
 def GetService(api_docs_path=None):
   api_docs_path = api_docs_path or FLAGS.api_docs_path
   service = None
@@ -90,8 +107,9 @@ def GetService(api_docs_path=None):
       apis.append(FixApiDoc(api))
 
   service.pop('apis')
-  service['apiDocuments'] = apis
-  service['models'] = models
+  #service['apiDocuments'] = apis
+  service['models'] = FixModels(models)
+  service['basePath'], service['apiVersion'], service['apis'] = FlattenApiDocs(apis)
   return service
 
 
@@ -105,7 +123,8 @@ def RenderHtml(service):
 def main(args):
   service = GetService(FLAGS.api_docs_path)
 
-  print(json.dumps(service))
+  if FLAGS.show:
+    print(json.dumps(service))
 
   docs = RenderHtml(service)
 
