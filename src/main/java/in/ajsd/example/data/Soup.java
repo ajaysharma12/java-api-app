@@ -1,12 +1,9 @@
 package in.ajsd.example.data;
 
-import com.wordnik.swagger.annotations.ApiModel;
-
 import org.joda.time.Duration;
 
 import java.util.List;
 
-@ApiModel
 public class Soup {
   private String name;
   private List<String> ingredients;

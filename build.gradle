@@ -92,34 +92,6 @@ jettyRun {
   scanIntervalSeconds = 1
 }
 
-// API documentation
-apply plugin: 'maven'
-apply plugin: 'swagger'
-
-buildscript {
-  repositories {
-    mavenLocal()
-  }
-  dependencies {
-    classpath 'com.github.gradle-swagger:gradle-swagger-plugin:1.0.2-SNAPSHOT'
-  }
-}
-dependencies {
-  compile 'com.wordnik:swagger-annotations:1.3.8'
-}
-
-swagger {
-  endPoints = [
-    'in.ajsd.example.api'
-  ]
-  apiVersion = 'v1'
-  basePath = 'http://127.0.0.1:8080/example/api'
-  mustacheFileRoot = "${projectDir}/src/main/resources/"
-  outputTemplate = "${mustacheFileRoot}/swagger-doc.html.mustache"
-  swaggerDirectory = "${buildDir}/site/api-docs"
-  outputPath = "${buildDir}/site/swagger/swagger-doc.html"
-}
-
 // Misc
 configurations.all {
   exclude module: 'slf4j-log4j12'
