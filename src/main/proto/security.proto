@@ -1,0 +1,12 @@
+syntax = "proto2";
+
+package example.security;
+
+option java_package = "in.ajsd.example.security";
+
+message Session {
+  required int64 session_id = 1;
+  required int64 current_user_id = 2;
+  optional bool is_secure = 3 [default = false];
+  optional bool is_active = 4 [default = false];
+}
