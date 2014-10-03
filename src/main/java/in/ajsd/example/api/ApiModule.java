@@ -32,6 +32,7 @@ public class ApiModule extends ServletModule {
     // The API endpoints.
     bind(ContextApi.class);
     bind(GreeterApi.class);
+    bind(SecureApi.class);
     bind(SoupsApi.class);
 
     // Just to test that Guice injection works.
