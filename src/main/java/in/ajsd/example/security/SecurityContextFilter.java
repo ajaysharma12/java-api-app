@@ -1,62 +1,78 @@
 package in.ajsd.example.security;
 
-import in.ajsd.example.common.Sessions;
 import in.ajsd.example.security.Security.Session;
+import in.ajsd.example.service.InMemDatabase;
 import in.ajsd.example.user.Users.Role;
 import in.ajsd.example.user.Users.User;
 
+import com.auth0.jwt.JWTVerifier;
+import com.google.common.base.Strings;
 import com.sun.jersey.spi.container.ContainerRequest;
 import com.sun.jersey.spi.container.ContainerRequestFilter;
 import com.sun.jersey.spi.container.ContainerResponseFilter;
 import com.sun.jersey.spi.container.ResourceFilter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
+
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
-@Provider    // register as jersey's provider
+@Provider
 public class SecurityContextFilter implements ResourceFilter, ContainerRequestFilter {
 
-  private final HttpServletRequest httpRequest;
+  private static final Logger log = LoggerFactory.getLogger(SecurityContextFilter.class);
 
   @Inject
-  public SecurityContextFilter(@Context HttpServletRequest httpRequest) {
-    this.httpRequest = httpRequest;
-  }
+  private InMemDatabase database;
 
   @Override
   public ContainerRequest filter(ContainerRequest request) {
-    // Get the session and the user.
-    HttpSession httpSession = httpRequest.getSession(false);
-    if (httpSession == null || httpSession.getAttribute(Sessions.USER_ID_ATTR) == null) {
-      throw new WebApplicationException(Response.status(HttpServletResponse.SC_UNAUTHORIZED)
-          .header("Location", "/login.html")
-          .build());
+    String apiKey = request.getHeaderValue("API-Key");
+    String token = request.getHeaderValue(HttpHeaders.AUTHORIZATION);
+    if (Strings.isNullOrEmpty(token) || Strings.isNullOrEmpty(apiKey)) {
+      throw new WebApplicationException(Response.Status.BAD_REQUEST);
     }
-    String userId = (String) httpSession.getAttribute(Sessions.USER_ID_ATTR);
 
-    // User user = userService.getUser(userId);
+    String secret = (String) database.get(apiKey + ":jwtkey");
+    if (Strings.isNullOrEmpty(secret)) {
+      log.warn("No secret");
+      throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+    }
+
+    JWTVerifier verifier = new JWTVerifier(secret, null, "ajsd.in");
+    try {
+      verifier.verify(token);
+    } catch (InvalidKeyException | NoSuchAlgorithmException | IllegalStateException
+        | SignatureException | IOException e) {
+      log.warn("Can't verify", e);
+      throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+    }
 
     User user = User.newBuilder()
-        .setId(userId)
+        .setId("42")
         .setName("arunjit")
         .addRole(Role.ADMIN)
         .build();
 
     Session session = Session.newBuilder()
-        .setSessionId(httpSession.getId())
-        .setCurrentUserId(userId)
+        .setSessionId("62442")
+        .setCurrentUserId("42")
         .setIsActive(true)
-        .setIsSecure(httpRequest.isSecure())
+        .setIsSecure(request.isSecure())
         .build();
 
     // Set security context.
     request.setSecurityContext(SecurityContexts.of(session, user));
+    log.info("Security context set!");
     return request;
   }
 
@@ -67,6 +83,6 @@ public class SecurityContextFilter implements ResourceFilter, ContainerRequestFi
 
   @Override
   public ContainerResponseFilter getResponseFilter() {
-    return null;
+    return null;  // not implemented
   }
 }

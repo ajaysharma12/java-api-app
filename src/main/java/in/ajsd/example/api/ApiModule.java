@@ -27,6 +27,7 @@ public class ApiModule extends ServletModule {
   @Override
   protected void configureServlets() {
     // The API endpoints.
+    bind(AuthApi.class);
     bind(ContextApi.class);
     bind(GreeterApi.class);
     bind(SecureApi.class);

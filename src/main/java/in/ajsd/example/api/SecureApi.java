@@ -1,6 +1,8 @@
 package in.ajsd.example.api;
 
+import in.ajsd.example.exception.Redirect;
 import in.ajsd.example.security.Roles;
+import in.ajsd.example.security.Secured;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
@@ -12,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
 
 @Path("/-")
+@Secured
 public class SecureApi {
 
   @RolesAllowed(Roles.ADMIN)
@@ -34,6 +37,9 @@ public class SecureApi {
   @Path("/sc")
   @Produces(MediaType.TEXT_PLAIN)
   public String usesSecurityContext(@Context SecurityContext sc) {
+    if (sc == null || sc.getUserPrincipal() == null) {
+      throw new Redirect("/login.html");
+    }
     StringBuilder builder = new StringBuilder();
     builder.append("user: ")
         .append(sc.getUserPrincipal().getName())

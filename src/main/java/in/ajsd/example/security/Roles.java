@@ -43,4 +43,14 @@ public class Roles {
     return stream(Role.values()).map(Role::toString).collect(Collectors.toList());
   }
 
+  private static final List<Role> ROLE_ORDER = asList(
+      Role.NONE,
+      Role.READONLY,
+      Role.READWRITE,
+      Role.ADMIN);
+
+  public static final boolean isAtLeast(Role required, Role current) {
+    return ROLE_ORDER.indexOf(current) >= ROLE_ORDER.indexOf(required);
+  }
+
 }

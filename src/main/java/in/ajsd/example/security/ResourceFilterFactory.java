@@ -20,6 +20,11 @@ public class ResourceFilterFactory extends RolesAllowedResourceFilterFactory {
   public List<ResourceFilter> create(AbstractMethod am) {
     // get filters from RolesAllowedResourceFilterFactory Factory!
     List<ResourceFilter> rolesFilters = super.create(am);
+
+    if (!am.getResource().isAnnotationPresent(Secured.class)) {
+      return rolesFilters;
+    }
+
     if (null == rolesFilters) {
       rolesFilters = new ArrayList<ResourceFilter>();
     }

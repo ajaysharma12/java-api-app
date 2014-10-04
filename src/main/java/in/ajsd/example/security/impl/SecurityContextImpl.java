@@ -25,7 +25,7 @@ public class SecurityContextImpl implements SecurityContext {
 
   @Override
   public String getAuthenticationScheme() {
-    return SecurityContext.FORM_AUTH;
+    return SecurityContext.BASIC_AUTH;
   }
 
   @Override
