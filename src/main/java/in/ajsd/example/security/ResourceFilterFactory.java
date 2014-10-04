@@ -11,7 +11,6 @@ import javax.inject.Inject;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-// register as jersey's provider
 public class ResourceFilterFactory extends RolesAllowedResourceFilterFactory {
 
   @Inject

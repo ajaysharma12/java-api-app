@@ -1,8 +1,8 @@
 package in.ajsd.example.security;
 
 import in.ajsd.example.security.Security.Session;
-import in.ajsd.example.users.Role;
-import in.ajsd.example.users.User;
+import in.ajsd.example.user.Users.Role;
+import in.ajsd.example.user.Users.User;
 
 import com.sun.jersey.spi.container.ContainerRequest;
 import com.sun.jersey.spi.container.ContainerRequestFilter;
@@ -22,7 +22,7 @@ public class SecurityContextFilter implements ResourceFilter, ContainerRequestFi
       .build();
 
   private static final User USER = User.newBuilder()
-      .setId(42)
+      .setId(42L)
       .setName("arunjit")
       .addRole(Role.ADMIN)
       .build();

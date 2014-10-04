@@ -1,0 +1,18 @@
+syntax = "proto2";
+
+package example.user;
+
+option java_package = "in.ajsd.example.user";
+
+message User {
+  required int64 id = 1;
+  optional string name = 2;
+  repeated Role role = 3;
+}
+
+enum Role {
+  NONE = 0;
+  READONLY = 1;
+  READWRITE = 2;
+  ADMIN = 3;
+}

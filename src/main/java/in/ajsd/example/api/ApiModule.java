@@ -1,5 +1,7 @@
 package in.ajsd.example.api;
 
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.name.Names;
 import com.google.inject.servlet.ServletModule;
@@ -16,15 +18,10 @@ public class ApiModule extends ServletModule {
 
   /** The base URL for all endpoints of the API. */
   private final String baseUrl;
-  private final ImmutableMap<String, String> initParams;
 
   public ApiModule(String baseUrl) {
-    this(baseUrl, API_INIT_PARAMS);
-  }
-
-  public ApiModule(String baseUrl, ImmutableMap<String, String> initParams) {
+    Preconditions.checkArgument(!Strings.isNullOrEmpty(baseUrl), "Missing API base URL");
     this.baseUrl = baseUrl;
-    this.initParams = initParams;
   }
 
   @Override
@@ -40,6 +37,6 @@ public class ApiModule extends ServletModule {
 
     // Use Jersey's GuiceContainer to serve the API.
     String servingPath = baseUrl + (baseUrl.endsWith("/*") ? "" : "/*");
-    serve(servingPath).with(GuiceContainer.class, initParams);
+    serve(servingPath).with(GuiceContainer.class, API_INIT_PARAMS);
   }
 }

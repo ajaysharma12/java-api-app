@@ -1,6 +1,6 @@
 package in.ajsd.example.api;
 
-import in.ajsd.example.users.Role;
+import in.ajsd.example.security.Roles;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
@@ -14,7 +14,7 @@ import javax.ws.rs.core.SecurityContext;
 @Path("/-")
 public class SecureApi {
 
-  @RolesAllowed({"ADMIN"})  // Won't accept Role.ADMIN.name().. TODO: use consts instead.
+  @RolesAllowed(Roles.ADMIN)
   @GET
   @Path("/let-me-in")
   @Produces(MediaType.TEXT_PLAIN)
@@ -35,12 +35,17 @@ public class SecureApi {
   @Produces(MediaType.TEXT_PLAIN)
   public String usesSecurityContext(@Context SecurityContext sc) {
     StringBuilder builder = new StringBuilder();
-    for (Role role : Role.values()) {
-      builder.append(role.name())
+    builder.append("user: ")
+        .append(sc.getUserPrincipal().getName())
+        .append("\n");
+
+    for (String role : Roles.allRoleNames()) {
+      builder.append(role)
           .append(": ")
-          .append(sc.isUserInRole(role.name()))
+          .append(sc.isUserInRole(role))
           .append("\n");
     }
+
     return builder.toString();
   }
 }

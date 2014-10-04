@@ -1,10 +1,11 @@
 package in.ajsd.example.security.impl;
 
+import in.ajsd.example.security.Roles;
 import in.ajsd.example.security.Security.Session;
-import in.ajsd.example.users.Role;
-import in.ajsd.example.users.User;
+import in.ajsd.example.user.Users.User;
 
 import com.google.common.base.Preconditions;
+import com.sun.security.auth.UserPrincipal;
 
 import java.security.Principal;
 
@@ -14,10 +15,12 @@ public class SecurityContextImpl implements SecurityContext {
 
   private final Session session;
   private final User user;
+  private final Principal principal;
 
   public SecurityContextImpl(Session session, User user) {
     this.session = Preconditions.checkNotNull(session, "Missing security session");
     this.user = Preconditions.checkNotNull(user, "User required");
+    this.principal = new UserPrincipal(String.valueOf(user.getId()));
   }
 
   @Override
@@ -27,7 +30,7 @@ public class SecurityContextImpl implements SecurityContext {
 
   @Override
   public Principal getUserPrincipal() {
-    return user;
+    return principal;
   }
 
   @Override
@@ -37,7 +40,7 @@ public class SecurityContextImpl implements SecurityContext {
 
   @Override
   public boolean isUserInRole(String role) {
-    return session.getIsActive() && user.getRoles().contains(Role.valueOf(role));
+    return session.getIsActive() && user.getRoleList().contains(Roles.get(role));
   }
 
 }
