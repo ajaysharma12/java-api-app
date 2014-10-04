@@ -5,7 +5,7 @@ package example.user;
 option java_package = "in.ajsd.example.user";
 
 message User {
-  required int64 id = 1;
+  required string id = 1;
   optional string name = 2;
   repeated Role role = 3;
 }

@@ -1,5 +1,6 @@
 package in.ajsd.example.security;
 
+import in.ajsd.example.common.Sessions;
 import in.ajsd.example.security.Security.Session;
 import in.ajsd.example.user.Users.Role;
 import in.ajsd.example.user.Users.User;
@@ -9,30 +10,50 @@ import com.sun.jersey.spi.container.ContainerRequestFilter;
 import com.sun.jersey.spi.container.ContainerResponseFilter;
 import com.sun.jersey.spi.container.ResourceFilter;
 
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.ext.Provider;
 
 @Provider    // register as jersey's provider
 public class SecurityContextFilter implements ResourceFilter, ContainerRequestFilter {
 
-  private static final Session SESSION = Session.newBuilder()
-      .setSessionId(62442)
-      .setCurrentUserId(42)
-      .setIsActive(true)
-      .setIsSecure(false)
-      .build();
+  private final HttpServletRequest httpRequest;
 
-  private static final User USER = User.newBuilder()
-      .setId(42L)
-      .setName("arunjit")
-      .addRole(Role.ADMIN)
-      .build();
+  @Inject
+  public SecurityContextFilter(@Context HttpServletRequest httpRequest) {
+    this.httpRequest = httpRequest;
+  }
 
   @Override
   public ContainerRequest filter(ContainerRequest request) {
-    // Get the session and the user
+    // Get the session and the user.
+    HttpSession httpSession = httpRequest.getSession(false);
+    if (httpSession == null || httpSession.getAttribute(Sessions.USER_ID_ATTR) == null) {
+      throw new WebApplicationException(HttpServletResponse.SC_UNAUTHORIZED);
+    }
+    String userId = (String) httpSession.getAttribute(Sessions.USER_ID_ATTR);
 
-    // Set security context
-    request.setSecurityContext(SecurityContexts.of(SESSION, USER));
+    // User user = userService.getUser(userId);
+
+    User user = User.newBuilder()
+        .setId(userId)
+        .setName("arunjit")
+        .addRole(Role.ADMIN)
+        .build();
+
+    Session session = Session.newBuilder()
+        .setSessionId(httpSession.getId())
+        .setCurrentUserId(userId)
+        .setIsActive(true)
+        .setIsSecure(httpRequest.isSecure())
+        .build();
+
+    // Set security context.
+    request.setSecurityContext(SecurityContexts.of(session, user));
     return request;
   }
 
