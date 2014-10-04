@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
 @Provider    // register as jersey's provider
@@ -33,7 +34,9 @@ public class SecurityContextFilter implements ResourceFilter, ContainerRequestFi
     // Get the session and the user.
     HttpSession httpSession = httpRequest.getSession(false);
     if (httpSession == null || httpSession.getAttribute(Sessions.USER_ID_ATTR) == null) {
-      throw new WebApplicationException(HttpServletResponse.SC_UNAUTHORIZED);
+      throw new WebApplicationException(Response.status(HttpServletResponse.SC_UNAUTHORIZED)
+          .header("Location", "/login.html")
+          .build());
     }
     String userId = (String) httpSession.getAttribute(Sessions.USER_ID_ATTR);
 
