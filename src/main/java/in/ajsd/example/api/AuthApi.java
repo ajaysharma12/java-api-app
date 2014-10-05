@@ -1,6 +1,5 @@
 package in.ajsd.example.api;
 
-import in.ajsd.example.common.Sessions;
 import in.ajsd.example.service.InMemDatabase;
 import in.ajsd.jwt.JwtData;
 import in.ajsd.jwt.JwtException;
@@ -14,12 +13,10 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -36,23 +33,6 @@ public class AuthApi {
 
   @Inject
   private InMemDatabase database;
-
-  @GET
-  @Produces(MediaType.TEXT_PLAIN)
-  public String check(@Context HttpServletRequest request) {
-    log.info("Checking login status..");
-    HttpSession session = request.getSession(false);
-    String status = "none";
-    if (session == null) {
-      status = "No session";
-    } else if (session.getAttribute(Sessions.USER_ID_ATTR) == null) {
-      status = "No user";
-    } else {
-      status = (String) session.getAttribute(Sessions.USER_NAME_ATTR);
-    }
-    log.info(status);
-    return status;
-  }
 
   @POST
   @Path("/login")
@@ -74,7 +54,7 @@ public class AuthApi {
       token = JwtSigner.createToken(secretBytes,
           JwtData.newBuilder()
               .setIssuer("ajsd.in")
-              .setSubject("42")  // userId
+              .setSubject("44442")  // userPublicId
               .build());
     } catch (JwtException e) {
       log.error("Error creating token", e);
@@ -85,7 +65,7 @@ public class AuthApi {
     return token;
   }
 
-  @GET
+  @DELETE
   @Path("/logout")
   public Response logout(@Context HttpHeaders headers) {
     List<String> apiKey = headers.getRequestHeader("API-Key");

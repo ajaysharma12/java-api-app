@@ -64,7 +64,7 @@ public class SecurityContextFilter implements ResourceFilter, ContainerRequestFi
     // if session == null -> UNAUTHORIZED
     Session session = Session.newBuilder()
         .setSessionId("62442")
-        .setCurrentUserId(userId)
+        .setCurrentUserPublicId("444" + userId)
         .setIsActive(true)
         .setIsSecure(request.isSecure())
         .build();
