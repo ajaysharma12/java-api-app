@@ -51,8 +51,6 @@ public class AuthApi {
       session = sessionService.create(user.getId());
     }
 
-    log.info("Secret: {}", session.getSessionSecret());
-
     String token;
     try {
       token = JwtSigner.createToken(session.getSessionSecret(),
@@ -80,6 +78,7 @@ public class AuthApi {
 
     Session session = sessionService.getSessionForApiKey(apiKey.get(0));
     if (session == null) {
+      log.warn("session=null");
       throw new WebApplicationException(Response.Status.UNAUTHORIZED);
     }
 

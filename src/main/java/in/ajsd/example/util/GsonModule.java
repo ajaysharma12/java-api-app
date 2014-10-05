@@ -1,6 +1,7 @@
 package in.ajsd.example.util;
 
 import in.ajsd.example.proto.ApiEntities;
+import in.ajsd.example.security.Security;
 import in.ajsd.example.util.adapter.DurationGsonAdapter;
 import in.ajsd.example.util.adapter.ProtobufGsonAdapter;
 
@@ -36,6 +37,7 @@ public class GsonModule extends AbstractModule {
     registerProto(builder, ApiEntities.Error.class);
     registerProto(builder, ApiEntities.Context.class);
     registerProto(builder, ApiEntities.Pulse.class);
+    registerProto(builder, Security.AuthResponse.class);
 
     return builder.create();
   }

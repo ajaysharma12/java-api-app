@@ -48,8 +48,6 @@ public class SecurityContextFilter implements ResourceFilter, ContainerRequestFi
         .setIsSecure(request.isSecure())
         .build();
 
-    log.info("Secret: {}", session.getSessionSecret());
-
     JwtData jwt;
     try {
       jwt = JwtVerifier.verifyToken(session.getSessionSecret(), token);
@@ -58,11 +56,12 @@ public class SecurityContextFilter implements ResourceFilter, ContainerRequestFi
         log.error("Couldn't verify token", e.getCause());
         throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
       }
-      log.info("", e);  // log.debug
+      log.info("JWT verifier", e);  // log.debug
       throw new WebApplicationException(Response.Status.UNAUTHORIZED);
     }
 
-    if (jwt.getSubject() != apiKey) {
+    if (!jwt.getSubject().equals(apiKey)) {
+      log.warn("!jwt.getSubject().equals(apiKey)");
       throw new WebApplicationException(Response.Status.UNAUTHORIZED);
     }
 
