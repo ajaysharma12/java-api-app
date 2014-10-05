@@ -4,6 +4,9 @@ import in.ajsd.example.security.Security.Session;
 import in.ajsd.example.service.InMemDatabase;
 import in.ajsd.example.user.Users.Role;
 import in.ajsd.example.user.Users.User;
+import in.ajsd.jwt.JwtData;
+import in.ajsd.jwt.JwtException;
+import in.ajsd.jwt.JwtVerifier;
 
 import com.google.common.base.Strings;
 import com.sun.jersey.spi.container.ContainerRequest;
@@ -43,26 +46,35 @@ public class SecurityContextFilter implements ResourceFilter, ContainerRequestFi
     }
     log.info("Secret: {}", secret);
 
-//    JWTVerifier verifier = new JWTVerifier(secret, null, "ajsd.in");
-//    try {
-//      verifier.verify(token);
-//    } catch (InvalidKeyException | NoSuchAlgorithmException | IllegalStateException
-//        | SignatureException | IOException e) {
-//      log.warn("Can't verify", e);
-//      throw new WebApplicationException(Response.Status.UNAUTHORIZED);
-//    }
+    JwtData jwt;
+    try {
+      jwt = JwtVerifier.verifyToken(secret, token);
+    } catch (JwtException e) {
+      if (e.getCause() != null) {
+        log.error("Couldn't verify token", e.getCause());
+        throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
+      }
+      log.info("", e);  // log.debug
+      throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+    }
 
-    User user = User.newBuilder()
-        .setId("42")
-        .setName("arunjit")
-        .addRole(Role.ADMIN)
-        .build();
+    String userId = jwt.getSubject();
 
+    // Session session = sessionService.getSessionForUser(userId);
+    // if session == null -> UNAUTHORIZED
     Session session = Session.newBuilder()
         .setSessionId("62442")
-        .setCurrentUserId("42")
+        .setCurrentUserId(userId)
         .setIsActive(true)
         .setIsSecure(request.isSecure())
+        .build();
+
+    // User user = userService.getUser(userId);
+    // if user == null -> UNAUTHORIZED
+    User user = User.newBuilder()
+        .setId(userId)
+        .setName("arunjit")
+        .addRole(Role.ADMIN)
         .build();
 
     // Set security context.

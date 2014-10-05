@@ -56,6 +56,7 @@ buildscript {
 
 repositories {
   mavenCentral()
+  mavenLocal()
 }
 
 // Application dependencies.
@@ -71,6 +72,7 @@ dependencies {
   compile 'com.sun.jersey:jersey-server:1.+'
   compile 'com.sun.jersey:jersey-servlet:1.+'
   compile 'commons-codec:commons-codec:1.+'
+  compile 'in.ajsd:java-jwt:1.0-pre'
   compile 'javax.annotation:jsr250-api:1.+'
   compile 'javax.ws.rs:jsr311-api:1.1.1'
   compile 'joda-time:joda-time:2.+'

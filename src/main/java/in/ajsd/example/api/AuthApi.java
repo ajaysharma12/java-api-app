@@ -2,6 +2,9 @@ package in.ajsd.example.api;
 
 import in.ajsd.example.common.Sessions;
 import in.ajsd.example.service.InMemDatabase;
+import in.ajsd.jwt.JwtData;
+import in.ajsd.jwt.JwtException;
+import in.ajsd.jwt.JwtSigner;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.RandomUtils;
@@ -55,18 +58,28 @@ public class AuthApi {
   @Path("/login")
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
   @Produces("application/jwt")
-  public String login(@FormParam("u") String username, @FormParam("p") String password) throws Exception {
+  public String login(@FormParam("u") String username, @FormParam("p") String password) {
+
+    // Find user for username and password.
+    // check if current user already has a session
+    // otherwise, create a new session for that user.
 
     log.info("Logging in {}", username);
     byte[] secretBytes = RandomUtils.nextBytes(16);
     String secret = Base64.encodeBase64URLSafeString(secretBytes);
     log.info("Secret: {}", secret);
 
-//    JwtSigner signer = new JwtSigner();
-//    ClaimSet claims = new ClaimSet();
-//    claims.setExp(123123123);
-//    String token = signer.encode(Algorithm.HS256, "ajsd.in", "iss", new String(secretBytes), claims);
-    String token = "";
+    String token;
+    try {
+      token = JwtSigner.createToken(secretBytes,
+          JwtData.newBuilder()
+              .setIssuer("ajsd.in")
+              .setSubject("42")  // userId
+              .build());
+    } catch (JwtException e) {
+      log.error("Error creating token", e);
+      throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
+    }
     database.set(username + ":jwtkey", secret);
 
     return token;
