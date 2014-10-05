@@ -78,7 +78,6 @@ public class AuthApi {
 
     Session session = sessionService.getSessionForApiKey(apiKey.get(0));
     if (session == null) {
-      log.warn("session=null");
       throw new WebApplicationException(Response.Status.UNAUTHORIZED);
     }
 

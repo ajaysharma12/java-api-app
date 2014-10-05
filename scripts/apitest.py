@@ -35,3 +35,5 @@ resp = conn.getresponse()
 print '\n-----\n'
 print 'DELETE /api/auth [%s %s]' % (resp.status, resp.reason)
 print resp.read()
+
+conn.close()

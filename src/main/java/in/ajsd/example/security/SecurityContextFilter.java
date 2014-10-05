@@ -56,12 +56,10 @@ public class SecurityContextFilter implements ResourceFilter, ContainerRequestFi
         log.error("Couldn't verify token", e.getCause());
         throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
       }
-      log.info("JWT verifier", e);  // log.debug
       throw new WebApplicationException(Response.Status.UNAUTHORIZED);
     }
 
     if (!jwt.getSubject().equals(apiKey)) {
-      log.warn("!jwt.getSubject().equals(apiKey)");
       throw new WebApplicationException(Response.Status.UNAUTHORIZED);
     }
 
@@ -76,7 +74,6 @@ public class SecurityContextFilter implements ResourceFilter, ContainerRequestFi
 
     // Set security context.
     request.setSecurityContext(SecurityContexts.of(session, user));
-    log.info("Security context set!");
     return request;
   }
 
