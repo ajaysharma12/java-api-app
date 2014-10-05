@@ -6,8 +6,14 @@ option java_package = "in.ajsd.example.security";
 
 message Session {
   required string session_id = 1;
-  required string current_user_public_id = 2;
-  // required string session_secret = 3;
-  optional bool is_secure = 4 [default = false];
-  optional bool is_active = 5 [default = false];
+  required string current_user_api_key = 2;
+  required string session_secret = 3;
+  // These fields are not stored.
+  optional bool is_secure = 11 [default = false];
+  optional bool is_active = 12 [default = false];
+}
+
+message AuthResponse {
+  required string api_key = 1;
+  required string jwt_token = 2;
 }

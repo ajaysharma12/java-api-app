@@ -17,9 +17,9 @@ enum Role {
   ADMIN = 3;
 }
 
-enum AccessLevel {
-  NONE = 0;
-  READONLY = 1;
-  READWRITE = 2;
-  ADMIN = 3;
-}
+// enum AccessLevel {
+//   NONE = 0;
+//   READONLY = 1;
+//   READWRITE = 2;
+//   ADMIN = 3;
+// }

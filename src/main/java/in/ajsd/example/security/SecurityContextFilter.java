@@ -1,7 +1,7 @@
 package in.ajsd.example.security;
 
 import in.ajsd.example.security.Security.Session;
-import in.ajsd.example.service.InMemDatabase;
+import in.ajsd.example.service.SessionService;
 import in.ajsd.example.user.Users.Role;
 import in.ajsd.example.user.Users.User;
 import in.ajsd.jwt.JwtData;
@@ -29,7 +29,7 @@ public class SecurityContextFilter implements ResourceFilter, ContainerRequestFi
   private static final Logger log = LoggerFactory.getLogger(SecurityContextFilter.class);
 
   @Inject
-  private InMemDatabase database;
+  private SessionService sessionService;
 
   @Override
   public ContainerRequest filter(ContainerRequest request) {
@@ -39,16 +39,20 @@ public class SecurityContextFilter implements ResourceFilter, ContainerRequestFi
       throw new WebApplicationException(Response.Status.BAD_REQUEST);
     }
 
-    String secret = (String) database.get(apiKey + ":jwtkey");
-    if (Strings.isNullOrEmpty(secret)) {
-      log.warn("No secret");
+    Session session = sessionService.getSessionForApiKey(apiKey);
+    if (session == null) {
       throw new WebApplicationException(Response.Status.UNAUTHORIZED);
     }
-    log.info("Secret: {}", secret);
+    session = session.toBuilder()
+        .setIsActive(true)
+        .setIsSecure(request.isSecure())
+        .build();
+
+    log.info("Secret: {}", session.getSessionSecret());
 
     JwtData jwt;
     try {
-      jwt = JwtVerifier.verifyToken(secret, token);
+      jwt = JwtVerifier.verifyToken(session.getSessionSecret(), token);
     } catch (JwtException e) {
       if (e.getCause() != null) {
         log.error("Couldn't verify token", e.getCause());
@@ -58,19 +62,13 @@ public class SecurityContextFilter implements ResourceFilter, ContainerRequestFi
       throw new WebApplicationException(Response.Status.UNAUTHORIZED);
     }
 
-    String userId = jwt.getSubject();
-
-    // Session session = sessionService.getSessionForUser(userId);
-    // if session == null -> UNAUTHORIZED
-    Session session = Session.newBuilder()
-        .setSessionId("62442")
-        .setCurrentUserPublicId("444" + userId)
-        .setIsActive(true)
-        .setIsSecure(request.isSecure())
-        .build();
+    if (jwt.getSubject() != apiKey) {
+      throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+    }
 
     // User user = userService.getUser(userId);
     // if user == null -> UNAUTHORIZED
+    String userId = "42";
     User user = User.newBuilder()
         .setId(userId)
         .setName("arunjit")

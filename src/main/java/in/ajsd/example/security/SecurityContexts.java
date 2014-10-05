@@ -8,9 +8,9 @@ import javax.ws.rs.core.SecurityContext;
 
 public class SecurityContexts {
 
-  private SecurityContexts() {}
-
   public static SecurityContext of(Session session, User user) {
     return new SecurityContextImpl(session, user);
   }
+
+  private SecurityContexts() {}
 }
