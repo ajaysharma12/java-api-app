@@ -60,7 +60,6 @@ repositories {
 
 // Application dependencies.
 dependencies {
-  compile 'com.auth0:java-jwt:0.+'
   compile 'com.google.code.findbugs:jsr305:2.0.3'
   compile 'com.google.code.gson:gson:2.+'
   compile 'com.google.guava:guava:18.0'

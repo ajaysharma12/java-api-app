@@ -5,7 +5,6 @@ import in.ajsd.example.service.InMemDatabase;
 import in.ajsd.example.user.Users.Role;
 import in.ajsd.example.user.Users.User;
 
-import com.auth0.jwt.JWTVerifier;
 import com.google.common.base.Strings;
 import com.sun.jersey.spi.container.ContainerRequest;
 import com.sun.jersey.spi.container.ContainerRequestFilter;
@@ -14,11 +13,6 @@ import com.sun.jersey.spi.container.ResourceFilter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SignatureException;
 
 import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
@@ -47,15 +41,16 @@ public class SecurityContextFilter implements ResourceFilter, ContainerRequestFi
       log.warn("No secret");
       throw new WebApplicationException(Response.Status.UNAUTHORIZED);
     }
+    log.info("Secret: {}", secret);
 
-    JWTVerifier verifier = new JWTVerifier(secret, null, "ajsd.in");
-    try {
-      verifier.verify(token);
-    } catch (InvalidKeyException | NoSuchAlgorithmException | IllegalStateException
-        | SignatureException | IOException e) {
-      log.warn("Can't verify", e);
-      throw new WebApplicationException(Response.Status.UNAUTHORIZED);
-    }
+//    JWTVerifier verifier = new JWTVerifier(secret, null, "ajsd.in");
+//    try {
+//      verifier.verify(token);
+//    } catch (InvalidKeyException | NoSuchAlgorithmException | IllegalStateException
+//        | SignatureException | IOException e) {
+//      log.warn("Can't verify", e);
+//      throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+//    }
 
     User user = User.newBuilder()
         .setId("42")

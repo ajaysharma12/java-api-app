@@ -3,9 +3,6 @@ package in.ajsd.example.api;
 import in.ajsd.example.common.Sessions;
 import in.ajsd.example.service.InMemDatabase;
 
-import com.auth0.jwt.Algorithm;
-import com.auth0.jwt.JwtSigner;
-
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.RandomUtils;
 import org.slf4j.Logger;
@@ -62,11 +59,14 @@ public class AuthApi {
 
     log.info("Logging in {}", username);
     byte[] secretBytes = RandomUtils.nextBytes(16);
-    String secret = new Base64(true).encodeAsString(secretBytes);
+    String secret = Base64.encodeBase64URLSafeString(secretBytes);
     log.info("Secret: {}", secret);
 
-    JwtSigner signer = new JwtSigner();
-    String token = signer.encode(Algorithm.HS256, "ajsd.in", "iss", secret, null);
+//    JwtSigner signer = new JwtSigner();
+//    ClaimSet claims = new ClaimSet();
+//    claims.setExp(123123123);
+//    String token = signer.encode(Algorithm.HS256, "ajsd.in", "iss", new String(secretBytes), claims);
+    String token = "";
     database.set(username + ":jwtkey", secret);
 
     return token;
