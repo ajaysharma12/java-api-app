@@ -5,9 +5,10 @@ package example.security;
 option java_package = "in.ajsd.example.security";
 
 message Session {
-  required string session_id = 1;
-  required string current_user_api_key = 2;
-  required string session_secret = 3;
+  required string id = 1;
+  required string current_user_id = 2;
+  required string current_user_api_key = 3;
+  required string session_secret = 4;
   // These fields are not stored.
   optional bool is_secure = 11 [default = false];
   optional bool is_active = 12 [default = false];

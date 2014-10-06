@@ -17,11 +17,12 @@ public class InMemSessionService implements SessionService {
   @Override
   public Session create(String userId) {
     Session session = Session.newBuilder()
-        .setSessionId(Util.createId())
+        .setId(Util.createId())
+        .setCurrentUserId(userId)
         .setCurrentUserApiKey(Util.createId())
         .setSessionSecret(Util.createSecretAsBase64())
         .build();
-    database.put(sessionKey(session.getSessionId()), session);
+    database.put(sessionKey(session.getId()), session);
     database.put(userKey(userId), session);
     database.put(userApiKey(session.getCurrentUserApiKey()), session);
     return session;
