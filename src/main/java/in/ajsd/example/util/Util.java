@@ -1,6 +1,6 @@
 package in.ajsd.example.util;
 
-import com.google.protobuf.Message;
+import com.google.protobuf.MessageLite;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.RandomUtils;
@@ -23,7 +23,7 @@ public class Util {
     return Base64.encodeBase64URLSafeString(createSecret());
   }
 
-  public static <T extends Message> byte[] serialize(T proto) throws IOException {
+  public static <T extends MessageLite> byte[] serialize(T proto) throws IOException {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     proto.writeTo(out);
     return out.toByteArray();
