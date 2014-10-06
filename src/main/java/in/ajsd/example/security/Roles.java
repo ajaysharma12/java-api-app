@@ -1,56 +1,21 @@
 package in.ajsd.example.security;
 
-import static java.util.Arrays.asList;
-import static java.util.Arrays.stream;
-
-import in.ajsd.example.user.Users.Role;
-
-import com.google.common.base.Converter;
-import com.google.common.collect.ImmutableBiMap;
-import com.google.common.collect.Maps;
+import com.google.common.collect.ImmutableList;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Roles {
 
-  public static final String NONE = "NONE";
-  public static final String READONLY = "READONLY";
-  public static final String READWRITE = "READWRITE";
-  public static final String ADMIN = "ADMIN";
+  public static final String EDITOR = "editor";
+  public static final String WRITER = "writer";
+  public static final String CONTRIBUTOR = "contributor";
 
-  private static Converter<Role, String> ROLE_CONVERTER =
-      Maps.asConverter(ImmutableBiMap.<Role, String>builder()
-          .put(Role.NONE, NONE)
-          .put(Role.READONLY, READONLY)
-          .put(Role.READWRITE, READWRITE)
-          .put(Role.ADMIN, ADMIN)
-          .build());
+  public static final ImmutableList<String> ALL_ROLES = ImmutableList.of(
+      EDITOR, WRITER, CONTRIBUTOR);
 
-  public static String get(Role role) {
-    return ROLE_CONVERTER.convert(role);
+  public static List<String> all() {
+    return ALL_ROLES;
   }
 
-  public static Role get(String role) {
-    return ROLE_CONVERTER.reverse().convert(role);
-  }
-
-  public static List<Role> allRoles() {
-    return asList(Role.values());
-  }
-
-  public static List<String> allRoleNames() {
-    return stream(Role.values()).map(Role::toString).collect(Collectors.toList());
-  }
-
-  private static final List<Role> ROLE_ORDER = asList(
-      Role.NONE,
-      Role.READONLY,
-      Role.READWRITE,
-      Role.ADMIN);
-
-  public static final boolean isAtLeast(Role required, Role current) {
-    return ROLE_ORDER.indexOf(current) >= ROLE_ORDER.indexOf(required);
-  }
-
+  private Roles() {}
 }

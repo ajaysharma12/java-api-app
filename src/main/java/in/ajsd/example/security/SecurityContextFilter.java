@@ -2,7 +2,7 @@ package in.ajsd.example.security;
 
 import in.ajsd.example.security.Security.Session;
 import in.ajsd.example.service.SessionService;
-import in.ajsd.example.user.Users.Role;
+import in.ajsd.example.user.Users.AccessLevel;
 import in.ajsd.example.user.Users.User;
 import in.ajsd.jwt.JwtData;
 import in.ajsd.jwt.JwtException;
@@ -28,8 +28,12 @@ public class SecurityContextFilter implements ResourceFilter, ContainerRequestFi
 
   private static final Logger log = LoggerFactory.getLogger(SecurityContextFilter.class);
 
+  private final SessionService sessionService;
+
   @Inject
-  private SessionService sessionService;
+  public SecurityContextFilter(SessionService sessionService) {
+    this.sessionService = sessionService;
+  }
 
   @Override
   public ContainerRequest filter(ContainerRequest request) {
@@ -69,7 +73,8 @@ public class SecurityContextFilter implements ResourceFilter, ContainerRequestFi
     User user = User.newBuilder()
         .setId(userId)
         .setName("arunjit")
-        .addRole(Role.ADMIN)
+        .setAccessLevel(AccessLevel.ADMIN)
+        .addRole(Roles.EDITOR)
         .build();
 
     // Set security context.

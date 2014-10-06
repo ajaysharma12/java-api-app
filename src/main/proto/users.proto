@@ -7,19 +7,13 @@ option java_package = "in.ajsd.example.user";
 message User {
   required string id = 1;
   optional string name = 2;
-  repeated Role role = 3;
+  optional AccessLevel access_level = 3;
+  repeated string role = 4;
 }
 
-enum Role {
+enum AccessLevel {
   NONE = 0;
   READONLY = 1;
   READWRITE = 2;
   ADMIN = 3;
 }
-
-// enum AccessLevel {
-//   NONE = 0;
-//   READONLY = 1;
-//   READWRITE = 2;
-//   ADMIN = 3;
-// }
