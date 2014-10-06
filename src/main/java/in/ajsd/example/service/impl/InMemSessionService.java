@@ -44,8 +44,10 @@ public class InMemSessionService implements SessionService {
   }
 
   @Override
-  public boolean endSession(String sessionId) {
-    database.remove(sessionKey(sessionId));
+  public boolean endSession(Session session) {
+    database.remove(sessionKey(session.getId()));
+    database.remove(userKey(session.getCurrentUserId()));
+    database.remove(userApiKey(session.getCurrentUserApiKey()));
     return true;
   }
 

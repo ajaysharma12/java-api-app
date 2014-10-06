@@ -20,5 +20,5 @@ public interface SessionService {
   @Nullable Session get(String sessionId);
 
   /** Ends (deletes) a session by ID. */
-  boolean endSession(String sessionId);
+  boolean endSession(Session session);
 }

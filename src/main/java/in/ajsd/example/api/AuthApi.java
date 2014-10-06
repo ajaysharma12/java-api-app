@@ -81,7 +81,7 @@ public class AuthApi {
       throw new WebApplicationException(Response.Status.UNAUTHORIZED);
     }
 
-    if (!sessionService.endSession(session.getId())) {
+    if (!sessionService.endSession(session)) {
       throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
     }
 

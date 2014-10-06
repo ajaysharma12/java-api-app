@@ -65,8 +65,13 @@ public class RedisSessionService implements SessionService {
   }
 
   @Override
-  public boolean endSession(String sessionId) {
-    return false;
+  public boolean endSession(Session session) {
+    Transaction tx = redis.multi();
+    tx.del(String.format(BY_SESSION_ID_FMT, session.getId()));
+    tx.del(String.format(BY_API_KEY_FMT, session.getCurrentUserApiKey()));
+    tx.del(String.format(BY_USER_ID_FMT, session.getCurrentUserId()));
+    check(tx.exec());
+    return true;
   }
 
   private void save(Session session) {
@@ -76,17 +81,14 @@ public class RedisSessionService implements SessionService {
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-    String sessionKey = String.format(BY_SESSION_ID_FMT, session.getId());
+    String sessionIdKey = String.format(BY_SESSION_ID_FMT, session.getId());
+    String apiKeyKey = String.format(BY_API_KEY_FMT, session.getCurrentUserApiKey());
+    String userIdKey = String.format(BY_USER_ID_FMT, session.getCurrentUserId());
     Transaction tx = redis.multi();
-    tx.set(sessionKey.getBytes(), data);
-    tx.set(String.format(BY_API_KEY_FMT, session.getCurrentUserApiKey()), sessionKey);
-    tx.set(String.format(BY_USER_ID_FMT, session.getCurrentUserId()), sessionKey);
-    List<Object> response = tx.exec();
-    for (Object res : response) {
-      if (res instanceof Throwable) {
-        throw new RuntimeException((Throwable) res);
-      }
-    }
+    tx.set(sessionIdKey.getBytes(), data);
+    tx.set(apiKeyKey, sessionIdKey);
+    tx.set(userIdKey, sessionIdKey);
+    check(tx.exec());
   }
 
   @Nullable
@@ -99,6 +101,14 @@ public class RedisSessionService implements SessionService {
       return Session.parseFrom(data);
     } catch (InvalidProtocolBufferException e) {
       return null;
+    }
+  }
+
+  private static void check(List<Object> response) {
+    for (Object res : response) {
+      if (res instanceof Throwable) {
+        throw new RuntimeException((Throwable) res);
+      }
     }
   }
 
