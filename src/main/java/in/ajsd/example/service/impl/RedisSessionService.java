@@ -4,6 +4,7 @@ import in.ajsd.example.security.Security.Session;
 import in.ajsd.example.service.SessionService;
 import in.ajsd.example.util.Util;
 
+import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.protobuf.InvalidProtocolBufferException;
 
@@ -36,6 +37,7 @@ public class RedisSessionService implements SessionService {
 
   @Override
   public Session create(String userId) {
+    Preconditions.checkArgument(!Strings.isNullOrEmpty(userId));
     Session session = Session.newBuilder()
         .setId(Util.createId())
         .setCurrentUserId(userId)
@@ -49,23 +51,27 @@ public class RedisSessionService implements SessionService {
 
   @Override
   public Session getSessionForUser(String userId) {
+    Preconditions.checkArgument(!Strings.isNullOrEmpty(userId));
     String sessionKey = redis.get(String.format(BY_USER_ID_FMT, userId));
     return read(sessionKey);
   }
 
   @Override
   public Session getSessionForApiKey(String apiKey) {
+    Preconditions.checkArgument(!Strings.isNullOrEmpty(apiKey));
     String sessionKey = redis.get(String.format(BY_API_KEY_FMT, apiKey));
     return read(sessionKey);
   }
 
   @Override
   public Session get(String sessionId) {
+    Preconditions.checkArgument(!Strings.isNullOrEmpty(sessionId));
     return read(String.format(BY_SESSION_ID_FMT, sessionId));
   }
 
   @Override
   public boolean endSession(Session session) {
+    Preconditions.checkNotNull(session);
     Transaction tx = redis.multi();
     tx.del(String.format(BY_SESSION_ID_FMT, session.getId()));
     tx.del(String.format(BY_API_KEY_FMT, session.getCurrentUserApiKey()));

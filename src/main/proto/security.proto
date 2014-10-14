@@ -13,8 +13,3 @@ message Session {
   optional bool is_secure = 11 [default = false];
   optional bool is_active = 12 [default = false];
 }
-
-message AuthResponse {
-  required string api_key = 1;
-  required string jwt_token = 2;
-}

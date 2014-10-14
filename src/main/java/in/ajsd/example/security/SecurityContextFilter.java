@@ -4,9 +4,9 @@ import in.ajsd.example.security.Security.Session;
 import in.ajsd.example.service.SessionService;
 import in.ajsd.example.user.Users.AccessLevel;
 import in.ajsd.example.user.Users.User;
+import in.ajsd.jwt.Jwt;
 import in.ajsd.jwt.JwtData;
 import in.ajsd.jwt.JwtException;
-import in.ajsd.jwt.JwtVerifier;
 
 import com.google.common.base.Strings;
 import com.sun.jersey.spi.container.ContainerRequest;
@@ -37,13 +37,23 @@ public class SecurityContextFilter implements ResourceFilter, ContainerRequestFi
 
   @Override
   public ContainerRequest filter(ContainerRequest request) {
-    String apiKey = request.getHeaderValue("API-Key");
     String token = request.getHeaderValue(HttpHeaders.AUTHORIZATION);
-    if (Strings.isNullOrEmpty(token) || Strings.isNullOrEmpty(apiKey)) {
+    if (Strings.isNullOrEmpty(token)) {
       throw new WebApplicationException(Response.Status.BAD_REQUEST);
     }
 
-    Session session = sessionService.getSessionForApiKey(apiKey);
+    JwtData jwt;
+    try {
+      jwt = Jwt.parse(token);
+    } catch (JwtException e) {
+      log.warn("Couldn't parse token", e.getCause());
+      throw new WebApplicationException(Response.Status.BAD_REQUEST);
+    }
+    if (Strings.isNullOrEmpty(jwt.getSubject())) {
+      throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+    }
+
+    Session session = sessionService.getSessionForApiKey(jwt.getSubject());
     if (session == null) {
       throw new WebApplicationException(Response.Status.UNAUTHORIZED);
     }
@@ -52,18 +62,13 @@ public class SecurityContextFilter implements ResourceFilter, ContainerRequestFi
         .setIsSecure(request.isSecure())
         .build();
 
-    JwtData jwt;
     try {
-      jwt = JwtVerifier.verifyToken(session.getSessionSecret(), token);
+      jwt = Jwt.verify(session.getSessionSecret(), token);
     } catch (JwtException e) {
       if (e.getCause() != null) {
         log.error("Couldn't verify token", e.getCause());
         throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
       }
-      throw new WebApplicationException(Response.Status.UNAUTHORIZED);
-    }
-
-    if (!jwt.getSubject().equals(apiKey)) {
       throw new WebApplicationException(Response.Status.UNAUTHORIZED);
     }
 

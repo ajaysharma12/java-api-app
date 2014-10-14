@@ -1,6 +1,5 @@
 package in.ajsd.example.security.impl;
 
-import in.ajsd.example.security.AccessLevels;
 import in.ajsd.example.security.Security.Session;
 import in.ajsd.example.user.Users.User;
 
@@ -40,7 +39,7 @@ public class SecurityContextImpl implements SecurityContext {
 
   @Override
   public boolean isUserInRole(String role) {
-    return session.getIsActive() && user.getRoleList().contains(AccessLevels.get(role));
+    return session.getIsActive() && user.getRoleList().contains(role);
   }
 
 }

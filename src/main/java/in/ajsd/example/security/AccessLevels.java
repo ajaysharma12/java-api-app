@@ -27,12 +27,12 @@ public class AccessLevels {
           .put(AccessLevel.ADMIN, ADMIN)
           .build());
 
-  public static String get(AccessLevel role) {
-    return ACCESS_LEVEL_CONVERTER.convert(role);
+  public static String get(AccessLevel level) {
+    return ACCESS_LEVEL_CONVERTER.convert(level);
   }
 
-  public static AccessLevel get(String role) {
-    return ACCESS_LEVEL_CONVERTER.reverse().convert(role);
+  public static AccessLevel get(String level) {
+    return ACCESS_LEVEL_CONVERTER.reverse().convert(level);
   }
 
   public static List<AccessLevel> allAccessLevels() {
